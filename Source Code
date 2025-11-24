@@ -1,0 +1,68 @@
+import numpy as np 
+import pandas as pd 
+from sklearn.model_selection import train_test_split 
+from sklearn.linear_model import LinearRegressior 
+from sklearn.metrics import mean_squared_error, r2_score 
+import matplotlib.pyplot as plt
+#
+# 1. ASK USER FOR DATA INPUT
+#
+print("Enter data for Student Performance Prediction System" 
+print("Example input format: 2,3,4,5,6"
+study_hours = input("InEnter study hours for all students (comma separated): " )
+attendance = input("Enter attendance percentages (comma separated): ") 
+assignments = input ("Enter assignments completed (%) values (comma separated): ")
+scores = input("Enter student scores (comma separated): ")
+# Convert user input strings into lists of float numbers
+study_hours = [float (x) for X in study_ _hours.split(",')] 
+attendance=[float (x) for x in attendance.split(",')] 
+assignments = [float(x) for x in assignments.split(",') 
+scores=[float (x) for x in scores.split(",')]
+
+Create dictionary
+data={`study_hours': study_hours, ' attendance': attendance, 'assignments_completed': assignments, 'score': scores}
+
+# Convert to DataFrame 
+df = pd.DataFrame(data) 
+print("InDataset Preview:") 
+print(df.head())
+
+# 2. FEATURES & TARGET 
+X = df[['study_hours', 'attendance', 'assignments_completed'] 
+y = df['score']
+
+# 3. TRAIN-TEST SPLIT
+X_train, X_test, y_train, y_test = train_test_split( X, y, test_size=0.2, random_state=42)
+
+
+#4. TRAIN THE MODEL 
+model = LinearRegression() 
+model.fit(X_train, y_train)
+print("InModel training complete.")
+
+# 5. MODEL EVALUATION
+y_pred=model.predict(x_test)
+mse = mean_squared error(y_test, y_pred) 
+r2 = r2_score(y_test, y_pred)
+print("\nModel Evaluation")
+print("Mean Squared Error (MSE) :", round(mse, 2))
+print ("R2 Score:", round(r2. 2))
+
+
+#6. PREDICT NEW STUDENT PERFORMANCE
+print("InEnter details of a new student to predict score:") 
+sh = float (input ("Study hours: ")) at = float(input("Attendance (%): ")) 
+ac = float(input("Assignments completed (%): "))
+ac=float(input('assignment completed (%):'))
+
+new_student = np.array([[sh, at, ac]].
+predicted score = model.predict(new_student)
+print("\nPredicted score for the new student:", round(predicted _score[0], 2))
+
+# 
+plt.scatter(df['study_hours'], df['score'], color='blue', label='Actual Scores')
+plt.xlabel("Study Hours") 
+plt.ylabel("Score") 
+plt.title("Study Hours vs Score") 
+plt.grid(True) 
+plt.show()
